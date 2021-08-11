@@ -1,44 +1,58 @@
 import './styles/main.css'
+import '@pnotify/core/dist/BrightTheme.css';
 import API from './js/fetchCountries'
-import fetchCountries from './js/fetchCountries';
 import getRefs from './js/get_refs';
-// import { alert, notice, info, success, error } from '@pnotify/core';
+import _ from 'lodash';
+import { alert } from '@pnotify/core';
 
 
 const refs = getRefs();
+const debouncedSearch = _.debounce(onSearch, 500);
 
-refs.searchInput.addEventListener('keydown', onSearch);
+refs.searchInput.addEventListener('keydown', debouncedSearch);
 
 
 function onSearch(e) {
     e.preventDefault();
 
-    const input = e.currentTarget;
-    const searchQuery = input.textContent;
-    console.log(searchQuery);
+    const input = e.target.value;
 
-    API.fetchCountries(searchQuery)
-        .then(renderCountriesList)
+    API.fetchCountries(input)
+        .then((countries) => {
+            if (countries.length >= 1 && countries.length <= 10) {
+                renderCountriesList(countries);
+            } else {
+                onError();
+            }
+            if (countries.length === 1) {
+                console.log(input);
+            }
+        })
         .catch(onError)
-        .finally(() => { input.reset() });
-
-    console.log(refs.searchInput.value);
+        .finally(() => refs.searchInput.reset());
 }
 
 
 function renderCountriesList(countries) {
     const searchedCountries = countries.map(country => {
         const countriesListItem = document.createElement('li');
-        countriesListItem.textContent = `${country}`;
-        return ingredientsListItem;
+        countriesListItem.textContent = `${country.name}`;
+        return countriesListItem;
     });
     refs.countriesList.append(...searchedCountries);
 };
 
-function onError() {
-    const myError = error({
-        text: "Too many matches found. Please enter a more specific query!"
+function createCountryCard(country) {
+    const countryCard = document.querySelector('.country');
+    countryCard.insertAdjacentHTML('beforeend',)
+};
+
+function onError(error) {
+    alert({
+        type: 'error',
+        text: 'Please enter a more specific query!',
     });
-    return myError;
+    let style = document.createElement('style');
+    document.head.appendChild(style);
+    style.sheet.insertRule('.pnotify-container {margin-left: 37%;}');
 }
-// _.debounce(onSearch, 500)
