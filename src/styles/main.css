@@ -24,3 +24,15 @@
     justify-content: center;
     align-items: center;
 }
+
+.params-items{
+    display: inline;
+    font-size: 20px;
+    margin-bottom: 25px;
+}
+
+.flag{
+    display: block;
+    height: 150px;
+    
+}

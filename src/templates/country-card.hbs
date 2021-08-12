@@ -1,0 +1,21 @@
+<h2 class="card_title" style="font-size: 30px;">{{0.name}}</h2>
+<div class="flag" style="height: 200px">
+    <picture src="{{0.flag}}" alt="{{0.name}} flag" class="flag"></picture>
+</div>
+<ul class="params">
+    <li class="params-items">
+        <p class="params-title"><b>Capital: </b>{{0.capital}}
+        </p>
+    </li>
+    <li class="params-items">
+        <p class="params-title"><b>Population: </b>{{0.population}}</p>
+    </li>
+    <li class="params-items">
+        <p class="params-title"><b>Languages:</b></p>
+        <ul class="langs-list">
+            {{#each 0.languages}}
+            <li>{{name}}</li>
+            {{/each}}
+        </ul>
+    </li>
+</ul>
