@@ -4,7 +4,7 @@ import '@pnotify/core/dist/BrightTheme.css';
 import API from './js/fetchCountries'
 import getRefs from './js/get_refs';
 import _ from 'lodash';
-import { alert } from '@pnotify/core';
+import { alert, notice } from '@pnotify/core';
 
 
 const refs = getRefs();
@@ -19,32 +19,43 @@ function onSearch(e) {
     listReset();
 
     const input = e.target.value;
-    // console.log(input);
 
-    API.fetchCountries(input)
-        .then((countries) => {
-            // console.log(countries);
-            if (countries.length === 1) {
-                createCountryCard(countries);
+    if (input.length > 0) {
+        API.fetchCountries(input)
+            .then(countrySearcher)
+            .catch(onError);
+    };
+};
 
-            } else if (countries.length > 1 && countries.length <= 10) {
-                renderCountriesList(countries);
+function onError(error) {
+    const errorMsg = alert({
+        type: 'error',
+        text: 'No such country. Try again!',
+        delay: 1000,
+    });
+    let style = document.createElement('style');
+    document.head.appendChild(style);
+    style.sheet.insertRule('.pnotify-container {margin-left: 37%;}');
+};
 
-            } else if (countries.length > 10) {
-                alert({
-                    type: 'error',
-                    text: 'Please enter a more specific query!',
-                });
-                let style = document.createElement('style');
-                document.head.appendChild(style);
-                style.sheet.insertRule('.pnotify-container {margin-left: 37%;}');
-            }
-        })
-        .catch(error => {
-            onError();
-        })
-    // .finally(() => refs.searchInput.reset());
+function countrySearcher(countries) {
+    if (countries.length === 1) {
+        createCountryCard(countries);
+
+    } else if (countries.length > 1 && countries.length <= 10) {
+        renderCountriesList(countries);
+
+    } else if (countries.length > 10) {
+        notice({
+            type: 'error',
+            text: 'Please enter a more specific query!',
+        });
+        let style = document.createElement('style');
+        document.head.appendChild(style);
+        style.sheet.insertRule('.pnotify-container {margin-left: 37%;}');
+    };
 }
+
 function listReset() {
     refs.countriesList.textContent = '';
     refs.countryCard.textContent = '';
@@ -63,13 +74,4 @@ function createCountryCard(country) {
     refs.countryCard.insertAdjacentHTML('beforeend', countryCardTmp(country));
 };
 
-function onError(error) {
-    alert({
-        type: 'error',
-        text: 'No such country. Try again!',
-    });
-    let style = document.createElement('style');
-    document.head.appendChild(style);
-    style.sheet.insertRule('.pnotify-container {margin-left: 37%;}');
-};
 

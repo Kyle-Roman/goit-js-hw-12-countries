@@ -34,5 +34,20 @@
 .flag{
     display: block;
     height: 150px;
-    
+    margin-left: 80px;
+    padding: 10px;
+}
+
+.country-wrapper{
+    display: flex;
+
+}
+
+.result_title{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.card_title{
+    text-align: center;
 }
