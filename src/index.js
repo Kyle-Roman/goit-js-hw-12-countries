@@ -10,9 +10,7 @@ import { alert, notice } from '@pnotify/core';
 const refs = getRefs();
 const debouncedSearch = _.debounce(onSearch, 500);
 
-
 refs.searchInput.addEventListener('keydown', debouncedSearch);
-
 
 function onSearch(e) {
     e.preventDefault();
@@ -28,14 +26,12 @@ function onSearch(e) {
 };
 
 function onError(error) {
-    const errorMsg = alert({
+    alert({
         type: 'error',
         text: 'No such country. Try again!',
-        delay: 1000,
+        delay: 100,
+        animateSpeed: 'fast',
     });
-    let style = document.createElement('style');
-    document.head.appendChild(style);
-    style.sheet.insertRule('.pnotify-container {margin-left: 37%;}');
 };
 
 function countrySearcher(countries) {
@@ -49,10 +45,9 @@ function countrySearcher(countries) {
         notice({
             type: 'error',
             text: 'Please enter a more specific query!',
+            animateSpeed: 'fast',
+            delay: 100,
         });
-        let style = document.createElement('style');
-        document.head.appendChild(style);
-        style.sheet.insertRule('.pnotify-container {margin-left: 37%;}');
     };
 }
 
@@ -73,5 +68,3 @@ function renderCountriesList(countries) {
 function createCountryCard(country) {
     refs.countryCard.insertAdjacentHTML('beforeend', countryCardTmp(country));
 };
-
-
