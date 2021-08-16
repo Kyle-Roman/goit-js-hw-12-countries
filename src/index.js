@@ -16,7 +16,7 @@ function onSearch(e) {
     e.preventDefault();
     listReset();
 
-    const input = e.target.value;
+    const input = e.target.value.trim();
 
     if (input.length > 0) {
         API.fetchCountries(input)
