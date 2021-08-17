@@ -7,7 +7,7 @@ var e,t=arguments[3];!function(t,r){"object"==typeof exports&&"object"==typeof m
 },{"handlebars/dist/handlebars.runtime":"pAws"}],"jExt":[function(require,module,exports) {
 
 },{}],"irxn":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;const e="https://restcountries.eu/rest/v2";function t(t){return fetch(`${e}/name/${t}`).then(e=>{if(e.ok)return e.json()})}var r={fetchCountries:t};exports.default=r;
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;const e="https://restcountries.eu/rest/v2";function t(t){return fetch(`${e}/name/${t}`).then(e=>{if(e.ok)return e.json();throw new Error(console.log(`'error code' ${e.status}`))})}var r={fetchCountries:t};exports.default=r;
 },{}],"h6Zu":[function(require,module,exports) {
 "use strict";function e(){return{searchInput:document.getElementById("input"),countriesList:document.getElementById("countries_list"),countryCard:document.querySelector(".country")}}Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=e;
 },{}],"yh9p":[function(require,module,exports) {
@@ -32,4 +32,4 @@ var t,e=arguments[3];!function(e,n){"object"==typeof exports&&"undefined"!=typeo
 },{}],"Focm":[function(require,module,exports) {
 "use strict";var e=a(require("./templates/country-card.hbs"));require("./styles/main.css"),require("@pnotify/core/dist/BrightTheme.css");var t=a(require("./js/fetchCountries")),n=a(require("./js/get_refs")),r=a(require("lodash")),u=require("@pnotify/core");function a(e){return e&&e.__esModule?e:{default:e}}const o=(0,n.default)(),c=r.default.debounce(i,500);function i(e){e.preventDefault(),f();const n=e.target.value.trim();n.length>0&&t.default.fetchCountries(n).then(d).catch(s)}function s(e){(0,u.alert)({type:"error",text:"No such country. Try again!",delay:100,animateSpeed:"fast"})}function d(e){1===e.length?h(e):e.length>1&&e.length<=10?l(e):e.length>10&&(0,u.notice)({type:"error",text:"Please enter a more specific query!",animateSpeed:"fast",delay:100})}function f(){o.countriesList.textContent="",o.countryCard.textContent=""}function l(e){const t=e.map(e=>{const t=document.createElement("li");return t.textContent=`${e.name}`,t});o.countriesList.append(...t)}function h(t){o.countryCard.insertAdjacentHTML("beforeend",(0,e.default)(t))}o.searchInput.addEventListener("keydown",c);
 },{"./templates/country-card.hbs":"DRrH","./styles/main.css":"jExt","@pnotify/core/dist/BrightTheme.css":"jExt","./js/fetchCountries":"irxn","./js/get_refs":"h6Zu","lodash":"B1iE","@pnotify/core":"txz9"}]},{},["Focm"], null)
-//# sourceMappingURL=/goit-js-hw-12-countries/src.30745e36.js.map
+//# sourceMappingURL=/goit-js-hw-12-countries/src.49a5c410.js.map
